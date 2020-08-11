@@ -1,23 +1,21 @@
 {
   "version": 2,
+  "env": {
+    "ON_VERCEL": "true"
+  },
   "builds": [
     {
-      "src": "api/routes/**/*.js",
+      "src": "api/**/*.js",
       "use": "@now/node"
     },
     {
-      "src": "package.json",
-      "use": "@now/static-build"
+      "src": "nuxt.config.js",
+      "use": "@nuxtjs/now-builder"
     }
   ],
-  "build": {
-    "env": {}
-  },
   "routes": [
-    { "src": "/api/hello(.*)", "dest": "api/routes/hello" },
-    { "src": "/api/(.*)", "dest": "api/routes/$1" },
-    { "src": "/api", "dest": "api/routes/index.js" },
-    { "src": "/_nuxt/.+", "headers": { "cache-control": "s-maxage=31536000" } },
+    { "src": "/api/(.*)", "dest": "api/index.js" },
+    { "src": "/api", "dest": "api/index.js" },
     { "src": "/(.*)", "dest": "$1" }
   ]
 }
