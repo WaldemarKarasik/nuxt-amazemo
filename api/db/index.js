@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 // mongodb database connection string. change it as per your needs. here "mydb" is the name of the database. You don't need to create DB from mongodb terminal. mongoose create the db automatically.
-mongoose.connect("mongodb://localhost:27017/next-amazemo", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-});
+mongoose.connect(
+  process.env.DATABASE_URL || "mongodb://localhost:27017/next-amazemo",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  }
+);
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function callback() {
