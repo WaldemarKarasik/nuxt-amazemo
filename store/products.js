@@ -25,6 +25,9 @@ export const mutations = {
   removeProduct(state, payload) {
     const index = state.products.indexOf(product => product._id == payload._id);
     state.products.splice(index, 1);
+  },
+  addProduct(state, product) {
+    state.products = [...state.products, product];
   }
   // removeProductFromCategory(state, payload) {
   //   state.categories = state.categories.map(category => {

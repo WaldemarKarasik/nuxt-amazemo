@@ -45,7 +45,7 @@ router.post("/create", async (req, res) => {
       .populate({ path: "category", populate: { path: "products" } });
     return res.status(201).json(productWithCategory);
   } catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json(e.message);
   }
 });
 
@@ -71,6 +71,30 @@ router.post("/remove", async (req, res) => {
       return res.json({ product: deletedProduct, categories });
     }
   );
+});
+
+router.post("/remove-many", async (req, res) => {
+  const { products } = req.body;
+  products.forEach(async product => {
+    try {
+      await req.product.findOneAndRemove({ _id: product });
+    } catch (e) {
+      return res.status(500).json(e.message);
+    }
+  });
+
+  const newProducts = await req.product.find().lean();
+  const categories = await req.category.find().populate("products");
+  return res.json({ products: newProducts, categories });
+});
+
+router.post("/search", async (req, res) => {
+  const { name } = req.body;
+  const products = await req.product
+    .find({ name: { $regex: name, $options: "i" } })
+    .limit(5)
+    .lean();
+  return res.json(products);
 });
 
 module.exports = router;

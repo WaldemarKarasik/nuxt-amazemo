@@ -49,6 +49,7 @@ export default {
   methods: {
     closeModal() {
       this.$emit("closeModal");
+      this.categoryName = "";
     },
     async submitForm() {
       const capitalizedCategoryName =

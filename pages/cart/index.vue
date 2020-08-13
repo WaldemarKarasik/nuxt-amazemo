@@ -18,7 +18,7 @@
               <select
                 ref="selectRef"
                 @change="onQtySelected($event, product)"
-                :value="getDefaultValue(product.qty)"
+                :value="product.qty"
               >
                 <option
                   v-for="option in availableQty(product._id)"
@@ -52,7 +52,7 @@ import { mapGetters } from "vuex";
 
 export default {
   data: () => ({
-    selectedQty: 1
+    selectedQty: 2
   }),
   computed: {
     cartItems() {
@@ -84,10 +84,6 @@ export default {
       });
       this.$cookies.remove("cartItems");
       this.$cookies.set("cartItems", this.cartItems);
-    },
-    getDefaultValue(qty) {
-      this.selectedQty = qty;
-      return this.selectedQty;
     }
   },
   async asyncData(ctx) {

@@ -4,9 +4,8 @@
       <h3 class="text-4xl">Действия с пользователями</h3>
       <div class="left-sidebar__actions">
         <!-- <DeleteUser user={user} /> -->
-        <a-button>Удалить</a-button>
-        <a-button>Редактировать</a-button>
-        <!-- <ModifyUser users={users} /> -->
+        <DeleteUser :users="users" />
+        <ModifyUser :users="users" />
       </div>
     </div>
 
@@ -25,14 +24,20 @@
 <script>
 import ProductsCard from "./products/ProductsCard";
 import CategoriesCard from "./categories/CategoriesCard";
+import ModifyUser from "./users/ModifyUser";
+import DeleteUser from "./users/DeleteUser";
 
 export default {
   components: {
     ProductsCard,
-    CategoriesCard
+    CategoriesCard,
+    ModifyUser
   },
-
-  methods: {}
+  props: {
+    users: {
+      type: Array
+    }
+  }
 };
 </script>
 

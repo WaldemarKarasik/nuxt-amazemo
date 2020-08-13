@@ -9,6 +9,11 @@ export const mutations = {
   addCategory(state, category) {
     state.categories = [...state.categories, category];
   },
+  setCategory(state, category) {
+    state.categories = state.categories.map(x =>
+      x._id == category._id ? category : x
+    );
+  },
   deleteCategory(state, category) {
     state.categories = state.categories.filter(x => x._id !== category._id);
   }

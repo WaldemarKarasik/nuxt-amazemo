@@ -1,7 +1,7 @@
 <template>
   <div>
     <Modal @adminSubmitted="adminSubmitted" :visible="!isSubmitted" />
-    <AdminPanel v-if="isSubmitted" />
+    <AdminPanel :users="users" v-if="isSubmitted" />
   </div>
 </template>
 
@@ -27,12 +27,25 @@ export default {
     if (rememberAdmin) {
       this.isSubmitted = true;
     }
+    this.$bus.$on("userChanged", userData => {
+      // const user = this.users.find((x) => x_id == userData._id)
+      this.users = this.users.map(x => (x._id == userData._id ? userData : x));
+      this.$message.success("Пользовательские данные изменены");
+    });
   },
-  asyncData(ctx) {
+  async asyncData(ctx) {
     if (ctx.store.state.auth.user._id != ctx.params.id) {
       ctx.redirect("/");
       ctx.res.end();
     }
+    const users = await ctx.store.$axios.$get(
+      `${
+        process.env.BASE_URL
+          ? process.env.BASE_URL + "/api/auth/all"
+          : "http://localhost:3000/api/auth/all"
+      }`
+    );
+    return { users };
   }
 };
 </script>

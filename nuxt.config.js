@@ -38,7 +38,11 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ["~/plugins/vee-validate.js", "~plugins/antd"],
+  plugins: [
+    "~/plugins/vee-validate.js",
+    "~plugins/antd",
+    "~/plugins/event-bus.js"
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
